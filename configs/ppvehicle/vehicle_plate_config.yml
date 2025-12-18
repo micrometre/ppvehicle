@@ -1,0 +1,34 @@
+# Vehicle + License Plate Detection Configuration
+# This config extends the vehicle detection config with plate recognition settings
+
+_BASE_: [
+  '../datasets/coco_detection.yml',
+  '../runtime.yml',
+  '../yolov3/_base_/optimizer_270e.yml',
+  '../yolov3/_base_/yolov3_darknet53.yml',
+  '../yolov3/_base_/yolov3_reader.yml',
+]
+
+# Model weights for vehicle detection
+weights: https://paddledet.bj.bcebos.com/models/vehicle_yolov3_darknet.pdparams
+
+# YOLOv3 configuration
+YOLOv3Head:
+  anchors: [[8, 9], [10, 23], [19, 15],
+            [23, 33], [40, 25], [54, 50],
+            [101, 80], [139, 145], [253, 224]]
+
+BBoxPostProcess:
+  nms:
+    name: MultiClassNMS
+    keep_top_k: 100
+    score_threshold: 0.005
+    nms_threshold: 0.45
+    nms_top_k: 400
+
+num_classes: 6
+
+# Test dataset configuration
+TestDataset:
+  !ImageFolder
+    anno_path: configs/ppvehicle/vehicle_yolov3/vehicle.json
