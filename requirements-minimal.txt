@@ -1,0 +1,7 @@
+# Minimal Requirements for Standalone Detection
+
+numpy<2.0
+opencv-python<=4.6.0
+paddlepaddle
+paddleocr>=2.7.0
+PyYAML
